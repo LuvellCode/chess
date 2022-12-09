@@ -1,5 +1,5 @@
 from .piece import Piece
-from .Pieces.bishop import Bishop
+from .pieces.bishop import Bishop
 
 class Board:
     # BLACK
@@ -30,13 +30,14 @@ class Board:
         Clears all the slots. Init from Piece overwrites the values from board matrix
         
         """
-        [[Piece(self, i, j) for j in range(self.size)] for i in range(self.size)]
+        # [[Piece(self, i, j) for j in range(self.size)] for i in range(self.size)]
         return self
     
     def default_setup(self):
         """
         Setup all the pieces to their slots
         """
+        self.board[0][0]
         pass
 
     def get_piece_from_slot(self, x, y) -> Piece:
@@ -51,5 +52,6 @@ class Board:
         """
         self.board[x][y].piece = piece
 
-    def move_piece(self, piece:Piece, x:int, y:int):
+    def move_piece(self, from_x:int, from_y:int, to_x:int, to_y:int):
         pass
+
