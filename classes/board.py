@@ -13,7 +13,7 @@ class Board:
     # 6
     # 7
     # WHITE
-    def __init__(self, size=8) -> None:
+    def __init__(self, size:int=8) -> None:
         self.board = [[None for _ in range(size)] for _ in range(size)]
         self.size = size
         self.generate()
@@ -40,14 +40,19 @@ class Board:
         """
         # self.board[0][0]
         pass
+    
+    def point_belongs(self, x:int, y:int) -> bool:
+        min_x, min_y = 0, 0
+        max_x = max_y = self.size
+        return min_x <= x < max_x and min_y <= x < max_y
 
-    def get_piece_from_slot(self, x, y) -> Piece or None:
+    def get_piece_from_slot(self, x:int, y:int) -> Piece or None:
         """
         returns a piece at given coordinates
         """
         return self.board[x][y]
 
-    def set_piece_to_slot(self, piece:Piece, x, y) -> None:
+    def set_piece_to_slot(self, piece:Piece, x:int, y:int) -> None:
         """
         self-explanatory
         """
