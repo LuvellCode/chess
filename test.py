@@ -1,14 +1,12 @@
 from classes.board import Board
 from classes.piece import Piece
-from classes.pieces.bishop import Bishop
-from classes.pieces.queen import Queen
-from classes.pieces.rook import Rook
-from classes.pieces.knight import Knight
-from classes.pieces.pawn import Pawn
+
+from classes.pieces import (BaseLogic, Bishop, King, Knight, Pawn, Queen, Rook)
+from classes.team import Team
+
 
 from pprint import pprint
 
-from classes.team import Team
 
 board = Board()
 
@@ -20,6 +18,9 @@ knight = Piece(board, 3, 3, Knight, Team(Team.BLACK))
 pawn = Piece(board, 4, 6, Pawn, Team(Team.BLACK))
 
 pawn.logic.first_move = False
+
+# Checking the limitations 
+print(BaseLogic.get_moves_based_on_direction(bishop, 1,1,max_range=1))
 # print(bsh, id(bsh))
 
 # print(f"{id(board)=}, {id(bsh.board)=} | {id(board)==id(bsh.board)}")

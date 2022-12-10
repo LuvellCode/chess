@@ -21,7 +21,7 @@ class Knight(BaseLogic):
         
         # moves = [(x,y) for x,y in moves_all if x >= min_x and y >= min_y and x < max_x and y < max_y]
         for x,y in moves_all:
-            other_piece = self.piece.board.board[x][y]
+            other_piece = self.piece.board.get_piece_from_slot(x, y)
             if x >= min_x and y >= min_y and x < max_x and y < max_y:
                 if other_piece is not None and not self.piece.can_beat(other_piece):
                     continue

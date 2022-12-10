@@ -27,7 +27,8 @@ class Board:
     
     def generate(self):
         """ 
-        Clears all the slots. Init from Piece overwrites the values from board matrix
+        Clears all the slots.
+        NOTE: Piece.__init__ overwrites the values from board matrix
         
         """
         # [[Piece(self, i, j) for j in range(self.size)] for i in range(self.size)]
@@ -37,21 +38,23 @@ class Board:
         """
         Setup all the pieces to their slots
         """
-        self.board[0][0]
+        # self.board[0][0]
         pass
 
-    def get_piece_from_slot(self, x, y) -> Piece:
+    def get_piece_from_slot(self, x, y) -> Piece or None:
         """
         returns a piece at given coordinates
         """
-        return filter(self.board, lambda slot: slot.x == x and slot.y == y)[0].piece
+        return self.board[x][y]
 
     def set_piece_to_slot(self, piece:Piece, x, y) -> None:
         """
-        self-explanatory.
+        self-explanatory
         """
         self.board[x][y].piece = piece
 
     def move_piece(self, from_x:int, from_y:int, to_x:int, to_y:int):
         pass
-
+    
+    def piece_exists_at_slot(self, x,y) -> bool:
+        return self.get_piece_from_slot(x,y) is not None

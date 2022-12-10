@@ -7,7 +7,7 @@ class BaseLogic:
 
     def get_available_moves(self) -> list:
         """
-        returns a set of moves ...
+        template. returns a set of moves ...
         """
         starting_point = self.piece.x, self.piece.y
         min_x, min_y = 0, 0
@@ -18,10 +18,13 @@ class BaseLogic:
         return set(moves)
 
     @staticmethod
-    def get_moves_based_on_direction(piece, dx, dy):
+    def get_moves_based_on_direction(piece, dx:int, dy:int, max_range:int=0) -> list:
         """
-        Used for bishop, queen, rook.
+        Used for bishop, queen, rook, pawn, king.
         Returns all clock directions (based on dx, dy)
+
+        max_range: Limitation of max iterations, how close will the move range be;
+        if max_range == 0 then the piece.board.size will be used.
 
         Possible dx, dy pairs : direction
          0, -1 : left
@@ -34,27 +37,39 @@ class BaseLogic:
          1, -1 : bot left
          
         """
+        min_range = 1
+
+        max_range = piece.board.size if max_range == 0 else max_range
+        if not isinstance(max_range, int) or max_range < min_range:
+            raise ValueError(f'Max range must be more or equeal to {min_range} (max_range >= {min_range}), {max_range} given.')
         
-        board_matrix = piece.board.board
+        board = piece.board
         min_x, min_y = 0, 0
-        max_x = max_y = piece.board.size
+        max_x = max_y = board.size
         
         x, y = piece.x, piece.y
+
 
         i = 1
         result = []
         while True:
+            if not (i <= max_range):
+                break
             new_x = x + dx*i
             new_y = y + dy*i
 
-            if min_x <= new_x < max_x and min_y <= new_y < max_y:
-                other_piece = board_matrix[new_x][new_y]
-                if other_piece is not None:
-                    if piece.can_beat(other_piece):
-                        result.append((new_x, new_y))
-                    break
-                result.append((new_x,new_y))
-            else: 
+            # Check whether new point is within borders
+            if not (min_x <= new_x < max_x and min_y <= new_y < max_y):
                 break
+
+            other_piece = board.get_piece_from_slot(new_x, new_y)
+            if other_piece is not None:
+                # If any other piece on the way of current one
+                if piece.can_beat(other_piece):
+                    # If teams are different
+                    result.append((new_x, new_y))
+                break
+            result.append((new_x,new_y))
+            
             i += 1
         return result
