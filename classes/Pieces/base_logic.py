@@ -25,7 +25,7 @@ class BaseLogic:
 
         max_range: Limitation of max iterations, how close will the move range be;
         if max_range == 0 then the piece.board.size will be used.
-        max_range: minimal radius of the moves to be located. E.g. for Knight it is 2 because it's moves are 2 indexes away from itself.
+        min_range: minimal radius of the moves to be located. E.g. for Knight it is 2 because it's moves are 2 indexes away from itself.
 
         Possible dx, dy pairs : direction
          0, -1 : left
